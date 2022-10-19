@@ -228,12 +228,15 @@ contract FactoryOwnedFixedNoMintNoBurnCanPause{
 
 
 contract RoleFixedNoMintNoBurnCanPause is ERC20, Pausable, AccessControl {
+
+    bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
     
     uint8 immutable s_decimals;
 
     constructor(string memory name, string memory symbol, uint256 initialSupply, address owner, uint8 _decimals
                 ) ERC20(name, symbol) {
                     _grantRole(DEFAULT_ADMIN_ROLE, owner);
+                    _grantRole(PAUSER_ROLE, owner);
                     s_decimals =  _decimals; 
                     _mint(owner, initialSupply * (10 ** decimals()));
                 }
@@ -242,11 +245,11 @@ contract RoleFixedNoMintNoBurnCanPause is ERC20, Pausable, AccessControl {
         return s_decimals;
     }
 
-    function pause() public onlyOwner {
+    function pause() public onlyRole(PAUSER_ROLE) {
         _pause();
     }
 
-    function unpause() public onlyOwner {
+    function unpause() public onlyRole(PAUSER_ROLE) {
         _unpause();
     }
 
@@ -321,12 +324,15 @@ contract FactoryOwnedFixedNoMintCanBurnCanPause{
 
 
 contract RoleFixedNoMintCanBurnCanPause is ERC20, Pausable, AccessControl, ERC20Burnable {
+
+    bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
     
     uint8 immutable s_decimals;
 
     constructor(string memory name, string memory symbol, uint256 initialSupply, address owner, uint8 _decimals
                 ) ERC20(name, symbol) {
                     _grantRole(DEFAULT_ADMIN_ROLE, owner);
+                    _grantRole(PAUSER_ROLE, owner);
                     s_decimals =  _decimals; 
                     _mint(owner, initialSupply * (10 ** decimals()));
                 }
@@ -335,11 +341,11 @@ contract RoleFixedNoMintCanBurnCanPause is ERC20, Pausable, AccessControl, ERC20
         return s_decimals;
     }
 
-    function pause() public onlyOwner {
+    function pause() public onlyRole(PAUSER_ROLE) {
         _pause();
     }
 
-    function unpause() public onlyOwner {
+    function unpause() public onlyRole(PAUSER_ROLE) {
         _unpause();
     }
 
@@ -415,12 +421,18 @@ contract FactoryOwnedUnlimitCanMintCanBurnCanPause{
 
 
 contract RoleUnlimitCanMintCanBurnCanPause is ERC20, Pausable, AccessControl, ERC20Burnable {
+
+    bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
+
+    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     
     uint8 immutable s_decimals;
 
     constructor(string memory name, string memory symbol, uint256 initialSupply, address owner, uint8 _decimals
                 ) ERC20(name, symbol) {
                     _grantRole(DEFAULT_ADMIN_ROLE, owner);
+                    _grantRole(PAUSER_ROLE, owner);
+                    _grantRole(MINTER_ROLE, owner);
                     s_decimals =  _decimals; 
                     _mint(owner, initialSupply * (10 ** decimals()));
                 }
@@ -429,15 +441,15 @@ contract RoleUnlimitCanMintCanBurnCanPause is ERC20, Pausable, AccessControl, ER
         return s_decimals;
     }
 
-    function mint(address to, uint256 amount) public onlyOwner {
+    function mint(address to, uint256 amount) public onlyRole(MINTER_ROLE) {
         _mint(to, amount);
     }
 
-    function pause() public onlyOwner {
+    function pause() public onlyRole(PAUSER_ROLE) {
         _pause();
     }
 
-    function unpause() public onlyOwner {
+    function unpause() public onlyRole(PAUSER_ROLE) {
         _unpause();
     }
 
@@ -512,12 +524,17 @@ contract FactoryOwnedUnlimitCanMintNoBurnCanPause{
 
 
 contract RoleUnlimitCanMintNoBurnCanPause is ERC20, Pausable, AccessControl {
+
+    bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
+    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     
     uint8 immutable s_decimals;
 
     constructor(string memory name, string memory symbol, uint256 initialSupply, address owner, uint8 _decimals
                 ) ERC20(name, symbol) {
                     _grantRole(DEFAULT_ADMIN_ROLE, owner);
+                    _grantRole(PAUSER_ROLE, owner);
+                    _grantRole(MINTER_ROLE, owner);
                     s_decimals =  _decimals; 
                     _mint(owner, initialSupply * (10 ** decimals()));
                 }
@@ -526,15 +543,15 @@ contract RoleUnlimitCanMintNoBurnCanPause is ERC20, Pausable, AccessControl {
         return s_decimals;
     }
 
-    function mint(address to, uint256 amount) public onlyOwner {
+    function mint(address to, uint256 amount) public onlyRole(MINTER_ROLE) {
         _mint(to, amount);
     }
 
-    function pause() public onlyOwner {
+    function pause() public onlyRole(PAUSER_ROLE) {
         _pause();
     }
 
-    function unpause() public onlyOwner {
+    function unpause() public onlyRole(PAUSER_ROLE) {
         _unpause();
     }
 
@@ -595,12 +612,15 @@ contract FactoryOwnedUnlimitCanMintNoBurnNoPause{
 
 
 contract RoleUnlimitCanMintNoBurnNoPause is ERC20, AccessControl {
+
+    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     
     uint8 immutable s_decimals;
 
     constructor(string memory name, string memory symbol, uint256 initialSupply, address owner, uint8 _decimals
                 ) ERC20(name, symbol) {
                     _grantRole(DEFAULT_ADMIN_ROLE, owner);
+                    _grantRole(MINTER_ROLE, owner);
                     s_decimals =  _decimals; 
                     _mint(owner, initialSupply * (10 ** decimals()));
                 }
@@ -609,7 +629,7 @@ contract RoleUnlimitCanMintNoBurnNoPause is ERC20, AccessControl {
         return s_decimals;
     }
 
-    function mint(address to, uint256 amount) public onlyOwner {
+    function mint(address to, uint256 amount) public onlyRole(MINTER_ROLE) {
         _mint(to, amount);
     }
 
@@ -664,12 +684,15 @@ contract FactoryOwnedUnlimitCanMintCanBurnNoPause{
 
 
 contract RoleUnlimitCanMintCanBurnNoPause is ERC20, AccessControl, ERC20Burnable {
+
+    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     
     uint8 immutable s_decimals;
 
     constructor(string memory name, string memory symbol, uint256 initialSupply, address owner, uint8 _decimals
                 ) ERC20(name, symbol) {
                     _grantRole(DEFAULT_ADMIN_ROLE, owner);
+                    _grantRole(MINTER_ROLE, owner);
                     s_decimals =  _decimals; 
                     _mint(owner, initialSupply * (10 ** decimals()));
                 }
@@ -678,7 +701,7 @@ contract RoleUnlimitCanMintCanBurnNoPause is ERC20, AccessControl, ERC20Burnable
         return s_decimals;
     }
 
-    function mint(address to, uint256 amount) public onlyOwner {
+    function mint(address to, uint256 amount) public onlyRole(MINTER_ROLE) {
         _mint(to, amount);
     }
 
@@ -756,6 +779,9 @@ contract FactoryOwnedCappedCanMintCanBurnCanPause{
 
 
 contract RoleCappedCanMintCanBurnCanPause is ERC20, Pausable, AccessControl, ERC20Burnable {
+
+    bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
+    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     
     uint8 immutable s_decimals;
     uint256 private immutable s_cap;
@@ -763,6 +789,8 @@ contract RoleCappedCanMintCanBurnCanPause is ERC20, Pausable, AccessControl, ERC
     constructor(string memory name, string memory symbol, uint256 initialSupply, address owner, uint8 _decimals, uint256 _cap
                 ) ERC20(name, symbol) {
                     _grantRole(DEFAULT_ADMIN_ROLE, owner);
+                    _grantRole(PAUSER_ROLE, owner);
+                    _grantRole(MINTER_ROLE, owner);
                     s_decimals =  _decimals;
                     require(_cap > 0, "ERC20Capped: cap is 0");
                     s_cap = _cap;
@@ -774,16 +802,16 @@ contract RoleCappedCanMintCanBurnCanPause is ERC20, Pausable, AccessControl, ERC
         return s_cap;
     }
 
-    function mint(address to, uint256 amount) public onlyOwner {
+    function mint(address to, uint256 amount) public onlyRole(MINTER_ROLE) {
         require(ERC20.totalSupply() + amount <= cap(), "ERC20Capped: cap exceeded");
         _mint(to, amount);
     }
     
-    function pause() public onlyOwner {
+    function pause() public onlyRole(PAUSER_ROLE) {
         _pause();
     }
 
-    function unpause() public onlyOwner {
+    function unpause() public onlyRole(PAUSER_ROLE) {
         _unpause();
     }
 
@@ -867,6 +895,9 @@ contract FactoryOwnedCappedCanMintNoBurnCanPause{
 
 
 contract RoleCappedCanMintNoBurnCanPause is ERC20, Pausable, AccessControl {
+
+    bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
+    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     
     uint8 immutable s_decimals;
     uint256 private immutable s_cap;
@@ -874,6 +905,8 @@ contract RoleCappedCanMintNoBurnCanPause is ERC20, Pausable, AccessControl {
     constructor(string memory name, string memory symbol, uint256 initialSupply, address owner, uint8 _decimals, uint256 _cap
                 ) ERC20(name, symbol) {
                     _grantRole(DEFAULT_ADMIN_ROLE, owner);
+                    _grantRole(PAUSER_ROLE, owner);
+                    _grantRole(MINTER_ROLE, owner);
                     s_decimals =  _decimals;
                     require(_cap > 0, "ERC20Capped: cap is 0");
                     s_cap = _cap;
@@ -885,16 +918,16 @@ contract RoleCappedCanMintNoBurnCanPause is ERC20, Pausable, AccessControl {
         return s_cap;
     }
 
-    function mint(address to, uint256 amount) public onlyOwner {
+    function mint(address to, uint256 amount) public onlyRole(MINTER_ROLE) {
         require(ERC20.totalSupply() + amount <= cap(), "ERC20Capped: cap exceeded");
         _mint(to, amount);
     }
     
-    function pause() public onlyOwner {
+    function pause() public onlyRole(PAUSER_ROLE) {
         _pause();
     }
 
-    function unpause() public onlyOwner {
+    function unpause() public onlyRole(PAUSER_ROLE) {
         _unpause();
     }
 
@@ -959,6 +992,8 @@ contract FactoryOwnedCappedCanMintCanBurnNoPause{
 
 
 contract RoleCappedCanMintCanBurnNoPause is ERC20, AccessControl, ERC20Burnable {
+
+    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     
     uint8 immutable s_decimals;
     uint256 private immutable s_cap;
@@ -966,6 +1001,7 @@ contract RoleCappedCanMintCanBurnNoPause is ERC20, AccessControl, ERC20Burnable 
     constructor(string memory name, string memory symbol, uint256 initialSupply, address owner, uint8 _decimals, uint256 _cap
                 ) ERC20(name, symbol) {
                     _grantRole(DEFAULT_ADMIN_ROLE, owner);
+                    _grantRole(MINTER_ROLE, owner);
                     s_decimals =  _decimals;
                     require(_cap > 0, "ERC20Capped: cap is 0");
                     s_cap = _cap;
@@ -977,7 +1013,7 @@ contract RoleCappedCanMintCanBurnNoPause is ERC20, AccessControl, ERC20Burnable 
         return s_cap;
     }
 
-    function mint(address to, uint256 amount) public onlyOwner {
+    function mint(address to, uint256 amount) public onlyRole(MINTER_ROLE) {
         require(ERC20.totalSupply() + amount <= cap(), "ERC20Capped: cap exceeded");
         _mint(to, amount);
     }
@@ -1031,6 +1067,8 @@ contract FactoryOwnedCappedCanMintNoBurnNoPause{
 
 
 contract RoleCappedCanMintNoBurnNoPause is ERC20, AccessControl {
+
+    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     
     uint8 immutable s_decimals;
     uint256 private immutable s_cap;
@@ -1038,6 +1076,7 @@ contract RoleCappedCanMintNoBurnNoPause is ERC20, AccessControl {
     constructor(string memory name, string memory symbol, uint256 initialSupply, address owner, uint8 _decimals, uint256 _cap
                 ) ERC20(name, symbol) {
                     _grantRole(DEFAULT_ADMIN_ROLE, owner);
+                    _grantRole(MINTER_ROLE, owner);
                     s_decimals =  _decimals;
                     require(_cap > 0, "ERC20Capped: cap is 0");
                     s_cap = _cap;
@@ -1049,7 +1088,7 @@ contract RoleCappedCanMintNoBurnNoPause is ERC20, AccessControl {
         return s_cap;
     }
 
-    function mint(address to, uint256 amount) public onlyOwner {
+    function mint(address to, uint256 amount) public onlyRole(MINTER_ROLE) {
         require(ERC20.totalSupply() + amount <= cap(), "ERC20Capped: cap exceeded");
         _mint(to, amount);
     }
@@ -1080,21 +1119,20 @@ contract Rator {
     FactoryOwnedCappedCanMintNoBurnCanPause immutable factoryOwnedCappedCanMintNoBurnCanPause;
     FactoryOwnedCappedCanMintCanBurnNoPause immutable factoryOwnedCappedCanMintCanBurnNoPause;
     FactoryOwnedCappedCanMintNoBurnNoPause immutable factoryOwnedCappedCanMintNoBurnNoPause;
-    FactoryRoleFixedNoMintNoBurnNoPause immutable factoryRoleFixedNoMintNoBurnNoPause;
+    
 
     FactoryRoleFixedNoMintNoBurnNoPause immutable factoryRoleFixedNoMintNoBurnNoPause;
     FactoryRoleFixedNoMintCanBurnNoPause immutable factoryRoleFixedNoMintCanBurnNoPause;
-    FactoryOwnedFixedNoMintNoBurnCanPause immutable factoryOwnedFixedNoMintNoBurnCanPause;
-    FactoryOwnedFixedNoMintCanBurnCanPause immutable factoryOwnedFixedNoMintCanBurnCanPause;
-    FactoryOwnedUnlimitCanMintCanBurnCanPause immutable factoryOwnedUnlimitCanMintCanBurnCanPause;
-    FactoryOwnedUnlimitCanMintNoBurnCanPause immutable factoryOwnedUnlimitCanMintNoBurnCanPause;
-    FactoryOwnedUnlimitCanMintNoBurnNoPause immutable factoryOwnedUnlimitCanMintNoBurnNoPause;
-    FactoryOwnedUnlimitCanMintCanBurnNoPause immutable factoryOwnedUnlimitCanMintCanBurnNoPause;
-    FactoryOwnedCappedCanMintCanBurnCanPause immutable factoryOwnedCappedCanMintCanBurnCanPause;
-    FactoryOwnedCappedCanMintNoBurnCanPause immutable factoryOwnedCappedCanMintNoBurnCanPause;
-    FactoryOwnedCappedCanMintCanBurnNoPause immutable factoryOwnedCappedCanMintCanBurnNoPause;
-    FactoryOwnedCappedCanMintNoBurnNoPause immutable factoryOwnedCappedCanMintNoBurnNoPause;
-    FactoryRoleFixedNoMintNoBurnNoPause immutable factoryRoleFixedNoMintNoBurnNoPause;
+    FactoryRoleFixedNoMintNoBurnCanPause immutable factoryRoleFixedNoMintNoBurnCanPause;
+    FactoryRoleFixedNoMintCanBurnCanPause immutable factoryRoleFixedNoMintCanBurnCanPause;
+    FactoryRoleUnlimitCanMintCanBurnCanPause immutable factoryRoleUnlimitCanMintCanBurnCanPause;
+    FactoryRoleUnlimitCanMintNoBurnCanPause immutable factoryRoleUnlimitCanMintNoBurnCanPause;
+    FactoryRoleUnlimitCanMintNoBurnNoPause immutable factoryRoleUnlimitCanMintNoBurnNoPause;
+    FactoryRoleUnlimitCanMintCanBurnNoPause immutable factoryRoleUnlimitCanMintCanBurnNoPause;
+    FactoryRoleCappedCanMintCanBurnCanPause immutable factoryRoleCappedCanMintCanBurnCanPause;
+    FactoryRoleCappedCanMintNoBurnCanPause immutable factoryRoleCappedCanMintNoBurnCanPause;
+    FactoryRoleCappedCanMintCanBurnNoPause immutable factoryRoleCappedCanMintCanBurnNoPause;
+    FactoryRoleCappedCanMintNoBurnNoPause immutable factoryRoleCappedCanMintNoBurnNoPause;
 
     constructor(){
         factoryNoOwnerFixedNoMintNoBurnNoPause = new FactoryNoOwnerFixedNoMintNoBurnNoPause();
@@ -1111,7 +1149,19 @@ contract Rator {
         factoryOwnedCappedCanMintNoBurnCanPause = new FactoryOwnedCappedCanMintNoBurnCanPause();
         factoryOwnedCappedCanMintCanBurnNoPause = new FactoryOwnedCappedCanMintCanBurnNoPause();
         factoryOwnedCappedCanMintNoBurnNoPause = new FactoryOwnedCappedCanMintNoBurnNoPause();
+
         factoryRoleFixedNoMintNoBurnNoPause = new FactoryRoleFixedNoMintNoBurnNoPause();
+        factoryRoleFixedNoMintCanBurnNoPause = new FactoryRoleFixedNoMintCanBurnNoPause();
+        factoryRoleFixedNoMintNoBurnCanPause = new FactoryRoleFixedNoMintNoBurnCanPause();
+        factoryRoleFixedNoMintCanBurnCanPause = new FactoryRoleFixedNoMintCanBurnCanPause();
+        factoryRoleUnlimitCanMintCanBurnCanPause = new FactoryRoleUnlimitCanMintCanBurnCanPause();
+        factoryRoleUnlimitCanMintNoBurnCanPause = new FactoryRoleUnlimitCanMintNoBurnCanPause();
+        factoryRoleUnlimitCanMintNoBurnNoPause = new FactoryRoleUnlimitCanMintNoBurnNoPause();
+        factoryRoleUnlimitCanMintCanBurnNoPause = new FactoryRoleUnlimitCanMintCanBurnNoPause();
+        factoryRoleCappedCanMintCanBurnCanPause = new FactoryRoleCappedCanMintCanBurnCanPause();
+        factoryRoleCappedCanMintNoBurnCanPause = new FactoryRoleCappedCanMintNoBurnCanPause();
+        factoryRoleCappedCanMintCanBurnNoPause = new FactoryRoleCappedCanMintCanBurnNoPause();
+        factoryRoleCappedCanMintNoBurnNoPause = new FactoryRoleCappedCanMintNoBurnNoPause();
     }
 
     mapping(address => address) public ownerToTokenTable;
