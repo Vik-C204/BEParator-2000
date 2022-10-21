@@ -60,23 +60,23 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
         args: ["verifyName","verifySymbol",100,"0x9EE8bF521f095Fc31208eB0Ec246ae8E705C1Abc",18], 
         log: true,
         waitConfirmations: network.config.blockConfirmations || 1,
-    })*/
+    })
 
     const OwnedUnlimitCanMintCanBurnNoPause = await deploy("OwnedUnlimitCanMintCanBurnNoPause", {
         from: deployer,
         args: ["verifyName","verifySymbol",100,"0x9EE8bF521f095Fc31208eB0Ec246ae8E705C1Abc",18], 
         log: true,
         waitConfirmations: network.config.blockConfirmations || 1,
-    })
+    })*/
 
-    /*const OwnedCappedCanMintCanBurnCanPause = await deploy("OwnedCappedCanMintCanBurnCanPause", {
+    const OwnedCappedCanMintCanBurnCanPause = await deploy("OwnedCappedCanMintCanBurnCanPause", {
         from: deployer,
         args: ["verifyName","verifySymbol",100,"0x9EE8bF521f095Fc31208eB0Ec246ae8E705C1Abc",18], 
         log: true,
         waitConfirmations: network.config.blockConfirmations || 1,
     })
 
-    const OwnedCappedCanMintNoBurnCanPause = await deploy("OwnedCappedCanMintNoBurnCanPause", {
+    /*const OwnedCappedCanMintNoBurnCanPause = await deploy("OwnedCappedCanMintNoBurnCanPause", {
         from: deployer,
         args: ["verifyName","verifySymbol",100,"0x9EE8bF521f095Fc31208eB0Ec246ae8E705C1Abc",18], 
         log: true,
@@ -120,10 +120,10 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
         //await verify(OwnedUnlimitCanMintCanBurnCanPause.address, ["verifyName","verifySymbol",100,"0x9EE8bF521f095Fc31208eB0Ec246ae8E705C1Abc",18])
         //await verify(OwnedUnlimitCanMintNoBurnCanPause.address, ["verifyName","verifySymbol",100,"0x9EE8bF521f095Fc31208eB0Ec246ae8E705C1Abc",18])
         //await verify(OwnedUnlimitCanMintNoBurnNoPause.address, ["verifyName","verifySymbol",100,"0x9EE8bF521f095Fc31208eB0Ec246ae8E705C1Abc",18])
-        await verify(OwnedUnlimitCanMintCanBurnNoPause.address, ["verifyName","verifySymbol",100,"0x9EE8bF521f095Fc31208eB0Ec246ae8E705C1Abc",18])
+        //await verify(OwnedUnlimitCanMintCanBurnNoPause.address, ["verifyName","verifySymbol",100,"0x9EE8bF521f095Fc31208eB0Ec246ae8E705C1Abc",18])
 
-        /*await verify(OwnedCappedCanMintCanBurnCanPause.address, ["verifyName","verifySymbol",100,"0x9EE8bF521f095Fc31208eB0Ec246ae8E705C1Abc",18,1000])
-        await verify(OwnedCappedCanMintNoBurnCanPause.address, ["verifyName","verifySymbol",100,"0x9EE8bF521f095Fc31208eB0Ec246ae8E705C1Abc",18,1000])
+        await verify(OwnedCappedCanMintCanBurnCanPause.address, ["verifyName","verifySymbol",100,"0x9EE8bF521f095Fc31208eB0Ec246ae8E705C1Abc",18,1000])
+        /*await verify(OwnedCappedCanMintNoBurnCanPause.address, ["verifyName","verifySymbol",100,"0x9EE8bF521f095Fc31208eB0Ec246ae8E705C1Abc",18,1000])
         await verify(OwnedCappedCanMintCanBurnNoPause.address, ["verifyName","verifySymbol",100,"0x9EE8bF521f095Fc31208eB0Ec246ae8E705C1Abc",18,1000])
         await verify(OwnedCappedCanMintNoBurnNoPause.address, ["verifyName","verifySymbol",100,"0x9EE8bF521f095Fc31208eB0Ec246ae8E705C1Abc",18,1000])
         //await verify(RoleGenerator.address, [])*/
